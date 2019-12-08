@@ -6,6 +6,7 @@ import pandas as pd
 dprg = pd.read_csv("aoc07.csv", header=None)
 dprg = dprg.values.tolist()[0]
 
+# dprg = [3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5]
 
 class Machine(Thread):
     def __init__(self, name, prog, inputs):
@@ -80,11 +81,11 @@ class Machine(Thread):
             return 4
         elif op == 99:
             return 0
-        return 0
+        return -1
 
     def run(self):
         step = self.opp(self.index)
-        while step > 0:
+        while step != 0:
             self.index += step
             step = self.opp(self.index)
 
@@ -122,6 +123,10 @@ def main():
 
     param = list(permutations(range(0, 5)))
     runworkers(param)
+
+    print('Took %s', time() - ts)
+
+    ts = time()
 
     param = list(permutations(range(5, 10)))
     runworkers(param)
